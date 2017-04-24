@@ -12,7 +12,7 @@ const search = angular.module('PubMedBrowser.pages.search', [])
 function config($stateProvider) {
   $stateProvider
     .state('search', {
-      url: '/', // search
+      url: '/?search&article',
       template: SearchTemplate,
       controller: 'SearchController',
       controllerAs: 'ctrl'
