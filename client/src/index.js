@@ -1,14 +1,19 @@
 import angular from 'angular';
 
-import {hello} from './app/hello';
-import 'angular-ui-router';
-import routesConfig from './routes';
+import Pages from './app/pages';
+// import Services from './app/services';
+import Components from './app/components';
+import uiRouter from 'angular-ui-router';
 
 import './index.scss';
 
-export const app = 'app';
-
-angular
-  .module(app, ['ui.router'])
+const app = angular.module('app', [uiRouter, Pages, Components])
   .config(routesConfig)
-  .component('app', hello);
+  .name;
+
+function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true).hashPrefix('!');
+  $urlRouterProvider.otherwise('/');
+}
+
+export default app;
