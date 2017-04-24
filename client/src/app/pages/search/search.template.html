@@ -1,8 +1,12 @@
 <div class="left-panel col-sm-3">
   <h1>PubMed Browser</h1>
-  <input type="text" class="form-control" ng-model="ctrl.searchText">
-  <button ng-click="ctrl.search()">Search</button>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search for..." ng-model="ctrl.searchText">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" ng-click="ctrl.search()">Search</button>
+    </span>
+  </div>
 </div>
 <div class="right-panel col-sm-9">
-  <article></article>
+  <article-list></article-list>
 </div>
