@@ -6,6 +6,23 @@
       <button class="btn btn-default" type="button" ng-click="ctrl.search()">Search</button>
     </span>
   </div>
+  <div class="search-result">
+    <ul class="list-group">
+      <li ng-repeat="result in ctrl.searchResult" class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            <span class="label label-info">{{result.date}}</span>
+          </div>
+          <div class="progress col-sm-6">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow={{result.score}} aria-valuemin="0" aria-valuemax="100" style="{{'width: ' + result.score + '%'}}">
+              {{result.score}}
+            </div>
+          </div>
+        </div>
+        <div>{{result.title}}</div>
+      </li>
+    </ul>
+  </div>
 </div>
 <div class="right-panel col-sm-9">
   <article-list></article-list>
