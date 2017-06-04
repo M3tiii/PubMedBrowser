@@ -5,9 +5,14 @@ import Pages from './app/pages';
 import Components from './app/components';
 import uiRouter from 'angular-ui-router';
 
+import 'angular-ui-bootstrap';
+import 'angular-animate';
+import 'angular-touch';
+import 'angular-sanitize';
+
 import './index.scss';
 
-const app = angular.module('app', [uiRouter, Pages, Components])
+const app = angular.module('app', ['ui.bootstrap', 'ngAnimate', 'ngTouch', 'ngSanitize', uiRouter, Pages, Components])
   .config(routesConfig)
   .name;
 
