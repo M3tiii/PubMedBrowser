@@ -13,6 +13,19 @@ html, body {
   letter-spacing: 2px;
 }
 
+.left-panel h1 {
+  color: #eee;
+}
+
 .right-panel {
+  padding-top: 20px;
   height: 100%;
+}
+
+.search-result {
+  padding-top: 20px;
+}
+
+.progress {
+  width: 40%;
 }
