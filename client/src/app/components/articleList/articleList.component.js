@@ -4,7 +4,7 @@ import controller from './articleList.controller';
 /** @ngInject */
 const ArticleListComponent = {
   template,
-  controller
+  controller: [controller]
 };
 
 export default ArticleListComponent;
