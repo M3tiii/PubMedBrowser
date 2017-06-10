@@ -7,23 +7,35 @@ html, body {
 
 .left-panel {
   height: 100%;
-  background-color: #4286f4;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
+}
+
+.left-panel .searcher {
+  background-color: #4286f4;
   letter-spacing: 2px;
 }
 
-.left-panel h1 {
+.left-panel .search-result {
+  letter-spacing: 2px;
+}
+
+.left-panel .advance-settings {
+  padding-top: 10px;
+  background-color: #4286f4;
+}
+
+.left-panel h1, .left-panel h3 {
+  padding-top: 5px;
   color: #eee;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .right-panel {
   padding-top: 20px;
   height: 100%;
-}
-
-.search-result {
-  padding-top: 20px;
 }
 
 .progress {
