@@ -1,12 +1,38 @@
 <div class="left-panel col-sm-3">
-  <h1>PubMed Browser</h1>
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Search for..." ng-model="ctrl.searchText">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button" ng-click="ctrl.search()">Search</button>
-    </span>
+  <div class="searcher shadow">
+    <h1>PubMed Browser</h1>
+    <div class="input-group">
+      <!-- <textarea class="form-control" rows="5" id="comment"></textarea> -->
+      <input type="text" class="form-control" placeholder="Search for..." ng-model="ctrl.searchText">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="ctrl.search()">Search</button>
+        <button class="btn btn-default" type="button" ng-click="isCollapsed = !isCollapsed">Advance</button>
+      </span>
+    </div>
   </div>
-  <div class="search-result">
+
+  <div uib-collapse="!isCollapsed">
+    <div class="advance-settings shadow">
+      <h3 class="list-heading">Advance settings:</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          Search by author
+          <input type="text" class="form-control" placeholder="author name..." ng-model="ctrl.advanceName"></li>
+        <li class="list-group-item">
+          <div class="checkbox">
+            <label><input type="checkbox" value="" ng-model="ctrl.advance1">Option 1</label>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="checkbox">
+            <label><input type="checkbox" value="" ng-model="ctrl.advance2">Option 2</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="search-result shadow">
     <ul class="list-group">
       <li ng-repeat="result in ctrl.searchResult" class="list-group-item">
         <div class="row">
@@ -24,6 +50,7 @@
     </ul>
   </div>
 </div>
+
 <div class="right-panel col-sm-9">
   <article-list></article-list>
 </div>
