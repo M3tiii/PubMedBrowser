@@ -1,0 +1,22 @@
+<div ng-repeat="article in $ctrl.articles">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{article.title}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <h4 class="list-heading">Authors:</h4>
+          <ul class="list-group">
+            <li ng-repeat="author in article.authors" class="list-group-item">
+              {{author}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-9">
+          <h4 class="list-heading">Abstract:</h4> {{article.abstract}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
