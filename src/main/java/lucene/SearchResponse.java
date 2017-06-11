@@ -1,9 +1,11 @@
-package network;
+package lucene;
 
 public class SearchResponse {
 
     private String PMID;
-    private boolean Articletitle;
+    private String articleTitle;
+    private String abstractText;
+    private float score;
 
     public String getPMID() {
         return PMID;
@@ -13,11 +15,15 @@ public class SearchResponse {
         this.PMID = PMID;
     }
 
-    public boolean isArticletitle() {
-        return Articletitle;
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
     }
 
-    public void setArticletitle(boolean articletitle) {
-        Articletitle = articletitle;
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public void setAbstractText(String abstractText) {
+        this.abstractText = abstractText;
     }
 }

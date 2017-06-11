@@ -11,7 +11,7 @@ public class Main {
         SparkRouter router = new SparkRouter();
         LuceneTester lucene = new LuceneTester();
         lucene.run();
-        router.run();
-        lucene.search("String2");
+        router.run(lucene);
+//        lucene.search("string2");
     }
 }

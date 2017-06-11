@@ -62,15 +62,16 @@ public class Indexer {
             System.out.println(e.getMessage());
         }
 
-        Document document = new Document();
-        document.add(new Field("name","article1", Field.Store.YES, Field.Index.NOT_ANALYZED));
-        document.add(new Field("FIELD1","string1", Field.Store.YES, Field.Index.NOT_ANALYZED));
-        document.add(new Field("FIELD1","string2", Field.Store.YES, Field.Index.NOT_ANALYZED));
+        document = new Document();
+        document.add(new Field("name","article1", Field.Store.YES, Field.Index.ANALYZED));
+        document.add(new Field("FIELD1","string1", Field.Store.YES, Field.Index.ANALYZED));
+        document.add(new Field("FIELD1","string2", Field.Store.YES, Field.Index.ANALYZED));
         writer.addDocument(document);
 
         document = new Document();
-        document.add(new Field("name","article2", Field.Store.YES, Field.Index.NOT_ANALYZED));
-        document.add(new Field("FIELD1","string2", Field.Store.YES, Field.Index.NOT_ANALYZED));
+        document.add(new Field("name","article2", Field.Store.YES, Field.Index.ANALYZED));
+        document.add(new Field("FIELD1","string1", Field.Store.YES, Field.Index.ANALYZED));
+        document.add(new Field("FIELD1","bbb sring2 aaaa", Field.Store.YES, Field.Index.ANALYZED));
         writer.addDocument(document);
 
         //TODO analyzed by lucene FIELD.INDEX....
@@ -92,20 +93,19 @@ public class Indexer {
                     writer.addDocument(document);
 
                     document = new Document();
-                    document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+                    document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("ArticleTitle")) {
 
-                    document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+                    document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("DescriptorName")) {
-
                     //if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
-                    document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+                    document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("AbstractText")) {
 
-                    document.add(new Field("Abstract", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+                    document.add(new Field("AbstractText", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
 
                 }
 

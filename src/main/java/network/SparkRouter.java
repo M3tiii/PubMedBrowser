@@ -1,20 +1,26 @@
 package network;
 
+import lucene.LuceneTester;
+import org.apache.lucene.queryParser.ParseException;
 import spark.Request;
 import spark.Response;
+
+import java.io.IOException;
 
 import static spark.Spark.*;
 
 public class SparkRouter {
 
     private JsonTransformer jsonTransformer = new JsonTransformer();
+    private LuceneTester lucene;
 
-    public void run() {
+    public void run(LuceneTester lucene) throws IOException, ParseException {
+        this.lucene = lucene;
         System.out.println("#Spark start");
         this.handleSearchRequest();
     }
 
-    public void handleSearchRequest() {
+    public void handleSearchRequest() throws IOException, ParseException {
         options("/*", (request, response) -> {
 
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -35,8 +41,15 @@ public class SparkRouter {
         post("/search", (Request request, Response response) -> {
             System.out.println("#Spark get search");
             SearchRequest searchRequest = jsonTransformer.fromJson(request.body(), SearchRequest.class);
-
-            return jsonTransformer.toJson(searchRequest);
+            try {
+                Object res = this.lucene.search(searchRequest.getText());
+                return jsonTransformer.toJson(res);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return "NONE";
         });
 
     }
