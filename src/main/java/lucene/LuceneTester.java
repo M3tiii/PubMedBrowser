@@ -19,6 +19,10 @@ public class LuceneTester {
         try {
             tester = new LuceneTester();
             tester.createIndex();
+<<<<<<< HEAD
+            tester.search("Female");
+=======
+>>>>>>> 47d3c3d32935df912ccfcae5f88a4537d6d1c9d4
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +35,11 @@ public class LuceneTester {
         numIndexed = indexer.createIndex();
         long endTime = System.currentTimeMillis();
         indexer.close();
+<<<<<<< HEAD
+        System.out.println(numIndexed + " File indexed, time taken: " +(endTime-startTime)+" ms");
+=======
         System.out.println("#Lucene " + numIndexed+ " File indexed, time taken: " +(endTime-startTime)+" ms");
+>>>>>>> 47d3c3d32935df912ccfcae5f88a4537d6d1c9d4
     }
 
     public void search(String searchQuery) throws IOException, ParseException {

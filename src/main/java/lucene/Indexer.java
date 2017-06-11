@@ -11,12 +11,20 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Indexer {
 
     private IndexWriter writer;
+    private String dataDir = "/Data";
+    private Document document = new Document();
 
     public Indexer(String indexDirectoryPath) throws IOException {
+
         //this directory will contain the indexes
         Directory indexDirectory =
                 FSDirectory.open(new File(indexDirectoryPath));
@@ -25,6 +33,7 @@ public class Indexer {
         writer = new IndexWriter(indexDirectory,
                 new StandardAnalyzer(Version.LUCENE_36),true,
                 IndexWriter.MaxFieldLength.UNLIMITED);
+
     }
 
     public void close() throws CorruptIndexException, IOException {
@@ -33,6 +42,25 @@ public class Indexer {
 
 
     public int createIndex() throws IOException {
+
+        try {
+
+            File file = new File(System.getProperty("user.dir") + dataDir + "/medline17n0893.xml");
+
+            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder();
+
+            org.w3c.dom.Document doc = dBuilder.parse(file);
+
+            if (doc.hasChildNodes()) {
+
+                printNote(doc.getChildNodes());
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         Document document = new Document();
         document.add(new Field("name","article1", Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -47,21 +75,73 @@ public class Indexer {
 
         //TODO analyzed by lucene FIELD.INDEX....
         //TODO SAVE ORGINAL ABSTRACT AND CLEREAD
-
-
-        //get all files in the data directory
-//        File[] files = new File(dataDirPath).listFiles();
-//
-//        for (File file : files) {
-//            if(!file.isDirectory()
-//                    && !file.isHidden()
-//                    && file.exists()
-//                    && file.canRead()
-//                    && filter.accept(file)
-//                    ){
-//                indexFile(file);
-//            }
-//        }
         return writer.numDocs();
     }
+
+    private void printNote(NodeList nodeList) throws IOException {
+
+        for (int count = 0; count < nodeList.getLength(); count++) {
+
+            Node tempNode = nodeList.item(count);
+
+            // make sure it's element node.
+            if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                if (tempNode.getNodeName().equals("PMID")) {
+
+                    writer.addDocument(document);
+
+                    document = new Document();
+                    document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+
+                } else if (tempNode.getNodeName().equals("ArticleTitle")) {
+
+                    document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+
+                } else if (tempNode.getNodeName().equals("DescriptorName")) {
+
+                    if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
+                    document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+
+                } else if (tempNode.getNodeName().equals("AbstractText")) {
+
+                    document.add(new Field("Abstract", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+
+                }
+
+                // get node name and value
+//                System.out.println("\nNode Name = " + tempNode.getNodeName() + " [OPEN]");
+//                System.out.println("Node Value = " + tempNode.getTextContent());
+
+//                    if (tempNode.hasAttributes()) {
+//
+//                        // get attributes names and values
+//                        NamedNodeMap nodeMap = tempNode.getAttributes();
+
+//                    for (int i = 0; i < nodeMap.getLength(); i++) {
+//
+//                        Node node = nodeMap.item(i);
+//                        System.out.println("attr name: " + node.getNodeName());
+//                        System.out.println("attr value: " + node.getNodeValue());
+//
+//                    }
+
+//                    }
+
+                if (tempNode.hasChildNodes()) {
+
+                    // loop again if has child nodes
+                    printNote(tempNode.getChildNodes());
+//                    System.out.println("JEST");
+
+                }
+
+//                System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
+
+            }
+
+        }
+
+    }
+
 }
