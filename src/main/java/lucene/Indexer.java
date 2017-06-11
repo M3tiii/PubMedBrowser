@@ -100,7 +100,7 @@ public class Indexer {
 
                 } else if (tempNode.getNodeName().equals("DescriptorName")) {
 
-                    if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
+                    //if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
                     document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("AbstractText")) {
