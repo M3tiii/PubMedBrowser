@@ -12,6 +12,6 @@ public class Main {
         LuceneTester lucene = new LuceneTester();
         lucene.run();
         router.run();
-        lucene.search("String1");
+        lucene.search("String2");
     }
 }

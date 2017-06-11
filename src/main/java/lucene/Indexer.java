@@ -45,6 +45,10 @@ public class Indexer {
         document.add(new Field("FIELD1","string2", Field.Store.YES, Field.Index.NOT_ANALYZED));
         writer.addDocument(document);
 
+        //TODO analyzed by lucene FIELD.INDEX....
+        //TODO SAVE ORGINAL ABSTRACT AND CLEREAD
+
+
         //get all files in the data directory
 //        File[] files = new File(dataDirPath).listFiles();
 //
