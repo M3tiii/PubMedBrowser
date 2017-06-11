@@ -17,7 +17,7 @@ import 'angular-sanitize';
 import './index.scss';
 
 const app = angular.module('app', ['ui.bootstrap', 'ngAnimate', 'ngTouch', 'ngSanitize', uiRouter, Pages, articleListModule])
-  .service('articleService', [articleService])
+  .service('articleService', ['$http', articleService])
   .config(routesConfig)
   .name;
 

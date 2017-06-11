@@ -15,8 +15,15 @@ class SearchController {
   }
 
   search() {
+    const searchData = {
+      text: this.searchText,
+      author: this.advanceName,
+      isAdvance: this.advance1
+    };
+
     console.log('search: ', this.searchText, this.articleId);
     this.location.search('search', this.searchText);
+    this.articleService.search(searchData);
   }
 }
 
