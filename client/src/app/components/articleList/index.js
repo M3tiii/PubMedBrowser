@@ -8,7 +8,7 @@ export const articleListModule = 'articleList';
 /** @ngInject */
 const ArticleListComponent = {
   template,
-  controller: ['articleService', controller]
+  controller: ['$scope', 'articleService', controller]
 };
 
 angular

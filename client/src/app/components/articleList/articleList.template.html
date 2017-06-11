@@ -1,7 +1,7 @@
 <div ng-repeat="article in $ctrl.articles">
   <div class="panel panel-default">
     <div class="panel-heading" ng-click="isCollapsed = !isCollapsed">
-      <h3 class="panel-title">{{article.title}}</h3>
+      <h3 class="panel-title">{{article.articleTitle}}</h3>
     </div>
     <div uib-collapse="!isCollapsed">
       <div class="panel-body">
@@ -15,7 +15,7 @@
             </ul>
           </div>
           <div class="col-sm-9">
-            <h4 class="list-heading">Abstract:</h4> {{article.abstract}}
+            <h4 class="list-heading">Abstract:</h4> {{article.abstractText}}
           </div>
         </div>
       </div>

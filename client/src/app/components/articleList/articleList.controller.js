@@ -1,8 +1,11 @@
 class ArticleList {
-  constructor(articleService) {
+  constructor($scope, articleService) {
     this.articleService = articleService;
     this.articles = [];
-    this.articles = this.articleService.get();
+
+    $scope.$on('update', () => {
+      this.articles = this.articleService.get();
+    });
   }
 }
 
