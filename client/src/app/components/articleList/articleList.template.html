@@ -1,37 +1,39 @@
 <div class="search-result">
   <ul class="list-group shadow">
-    <li ng-repeat="article in $ctrl.articles" class="list-group-item" ng-click="isCollapsed = !isCollapsed">
-      <div class="row">
-        <div class="col-sm-6">
-          <span class="label label-info" ng-click="$event.stopPropagation()">
+    <div ng-if="$ctrl.articles.length > 0">
+      <li ng-repeat="article in $ctrl.articles track by article.PMID" class="list-group-item" ng-click="isCollapsed = !isCollapsed">
+        <div class="row">
+          <div class="col-sm-6">
+            <span class="label label-info" ng-click="$event.stopPropagation()">
             <a target="_blank" ng-href="https://www.ncbi.nlm.nih.gov/pubmed/{{article.PMID}}/">{{article.PMID}} <i class="icon-link-ext"></i></a>
           </span>
-
-        </div>
-        <div class="progress col-sm-6">
-          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow={{article.score}} aria-valuemin="0" aria-valuemax="100" style="{{'width: ' + article.score + '%'}}">
-            {{article.score}}
           </div>
-        </div>
-      </div>
-      <h4>{{article.articleTitle}}</h4>
-      <div uib-collapse="!isCollapsed">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-sm-3">
-              <h4 class="list-heading">Authors:</h4>
-              <ul class="list-group">
-                <li ng-repeat="author in article.authors" class="list-group-item">
-                  {{author}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-9">
-              <h4 class="list-heading">Abstract:</h4> {{article.abstractText}}
+          <div class="progress col-sm-6">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow={{article.score}} aria-valuemin="0" aria-valuemax="100" style="{{'width: ' + article.score + '%'}}">
+              {{article.score}}
             </div>
           </div>
         </div>
-      </div>
-    </li>
+        <h4>{{article.articleTitle}}</h4>
+        <div uib-collapse="!isCollapsed">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h4 class="list-heading">Authors:</h4>
+                <ul class="list-group">
+                  {{article.authors}}
+                </ul>
+              </div>
+              <div class="col-sm-9">
+                <h4 class="list-heading">Abstract:</h4> {{article.abstractText}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+    <div ng-if="!$ctrl.init && $ctrl.articles.length == 0">
+      <h3><span class="warning label label-danger">Articles not found.</span></h3>
+    </div>
   </ul>
 </div>

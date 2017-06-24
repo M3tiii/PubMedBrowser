@@ -42,3 +42,14 @@ html, body {
 .progress {
   width: 40%;
 }
+
+.warning {
+  width: 100%;
+  display: inline-block;
+}
+
+.panel-fixed {
+  position: fixed;
+  width: inherit;
+  padding-right: 20px;
+}
