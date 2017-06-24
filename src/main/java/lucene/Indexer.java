@@ -2,6 +2,7 @@ package lucene;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileFilter;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -45,34 +46,37 @@ public class Indexer {
 
         try {
 
-            File file = new File(System.getProperty("user.dir") + dataDir + "/medline17n0893.xml");
+//            File file = new File(System.getProperty("user.dir") + dataDir + "/medline17n0893.xml");
+
+//            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
+//                    .newDocumentBuilder();
+
+//            org.w3c.dom.Document doc = dBuilder.parse(file);
+
 
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
                     .newDocumentBuilder();
 
-            org.w3c.dom.Document doc = dBuilder.parse(file);
+            File dir = new File(System.getProperty("user.dir") + dataDir);
 
-            if (doc.hasChildNodes()) {
+            FileFilter filter = (File file) -> file.isFile() && file.getName().endsWith(".xml");
+            File[] paths = dir.listFiles(filter);
+            org.w3c.dom.Document doc;
 
-                printNote(doc.getChildNodes());
-
+            System.out.println("#Lucene " + paths.length + " file to load.");
+            for(int i = 0; i < paths.length; i++) {
+                System.out.println("#Lucene parse file " + i);
+                doc = dBuilder.parse(paths[i]);
+                if (doc.hasChildNodes()) {
+                    printNote(doc.getChildNodes());
+                }
             }
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        document = new Document();
-        document.add(new Field("name","article1", Field.Store.YES, Field.Index.ANALYZED));
-        document.add(new Field("FIELD1","string1", Field.Store.YES, Field.Index.ANALYZED));
-        document.add(new Field("FIELD1","string2", Field.Store.YES, Field.Index.ANALYZED));
-        writer.addDocument(document);
-
-        document = new Document();
-        document.add(new Field("name","article2", Field.Store.YES, Field.Index.ANALYZED));
-        document.add(new Field("FIELD1","string1", Field.Store.YES, Field.Index.ANALYZED));
-        document.add(new Field("FIELD1","bbb sring2 aaaa", Field.Store.YES, Field.Index.ANALYZED));
-        writer.addDocument(document);
 
         //TODO analyzed by lucene FIELD.INDEX....
         //TODO SAVE ORGINAL ABSTRACT AND CLEREAD
@@ -93,11 +97,12 @@ public class Indexer {
                     writer.addDocument(document);
 
                     document = new Document();
-                    document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("ArticleTitle")) {
 
                     document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("ArticleTitleOrginal", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("DescriptorName")) {
                     //if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
@@ -106,6 +111,7 @@ public class Indexer {
                 } else if (tempNode.getNodeName().equals("AbstractText")) {
 
                     document.add(new Field("AbstractText", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("AbstractTextOrginal", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 }
 

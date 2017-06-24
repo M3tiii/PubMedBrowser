@@ -50,7 +50,7 @@ public class LuceneTester {
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = searcher.getDocument(scoreDoc);
             System.out.println("#Lucene File: " + doc.get("PMID"));
-            res.add(this.toResponse(doc.get("PMID"), doc.get("ArticleTitle"), doc.get("AbstractText"), scoreDoc.score));
+            res.add(this.toResponse(doc.get("PMID"), doc.get("ArticleTitleOrginal"), doc.get("AbstractTextOrginal"), scoreDoc.score));
         }
 
         searcher.close();
