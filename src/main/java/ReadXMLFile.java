@@ -18,6 +18,7 @@ public class ReadXMLFile {
     private static String dataDir = "/Data";
     private static IndexWriter writer;
     private static org.apache.lucene.document.Document document = new org.apache.lucene.document.Document();
+    private static String temp = "";
 
     public static void main(String[] args) {
 
@@ -64,7 +65,10 @@ public class ReadXMLFile {
 
                 if (tempNode.getNodeName() == "PMID" && tempNode.getNodeValue() != null) {
 
+                    System.out.println(temp);
+                    document.add(new Field("Authors", temp, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     writer.addDocument(document);
+                    temp = "";
 
                     document = new org.apache.lucene.document.Document();
                     document.add(new Field("PMID",tempNode.getNodeValue(), Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -81,11 +85,20 @@ public class ReadXMLFile {
 
                     document.add(new Field("Abstract",tempNode.getNodeValue(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
+                } else if (tempNode.getNodeName() == "LastName" && tempNode.getNodeValue() != null) {
+
+                    temp += tempNode.getNodeValue();
+
+                } else if (tempNode.getNodeName() == "ForeName" && tempNode.getNodeValue() != null) {
+
+                    temp += tempNode.getNodeValue();
+
                 }
 
-                    // get node name and value
-                    System.out.println("\nNode Name = " + tempNode.getNodeName() + " [OPEN]");
-                    System.out.println("Node Value = " + tempNode.getTextContent());
+
+                // get node name and value
+//                    System.out.println("\nNode Name = " + tempNode.getNodeName() + " [OPEN]");
+//                    System.out.println("Node Value = " + tempNode.getTextContent());
 
 //                    if (tempNode.hasAttributes()) {
 //
@@ -106,11 +119,17 @@ public class ReadXMLFile {
 
                         // loop again if has child nodes
                         printNote(tempNode.getChildNodes());
-                        System.out.println("JEST");
+//                        System.out.println("JEST");
 
                     }
 
-                    System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
+//                    if (tempNode.getNodeName() == "AuthorList"){// && tempNode.getNodeValue() != null) {
+//
+//                        document.add(new Field("Authors",tempNode.getNodeValue(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+//
+//                    }
+
+//                    System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
             }
 

@@ -18,11 +18,14 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import java.lang.*;
+
 public class Indexer {
 
     private IndexWriter writer;
     private String dataDir = "/Data";
     private Document document = new Document();
+    private static String tempAuthors = "";
 
     public Indexer(String indexDirectoryPath) throws IOException {
 
@@ -94,7 +97,14 @@ public class Indexer {
 
                 if (tempNode.getNodeName().equals("PMID")) {
 
+                    tempAuthors = tempAuthors.substring(1);
+                    System.out.println(tempAuthors);
+                    document.add(new Field("AuthorList", tempAuthors, Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("AuthorListOriginal", tempAuthors, Field.Store.YES, Field.Index.NOT_ANALYZED));
+
                     writer.addDocument(document);
+
+                    tempAuthors = "";
 
                     document = new Document();
                     document.add(new Field("PMID", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
@@ -112,6 +122,16 @@ public class Indexer {
 
                     document.add(new Field("AbstractText", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
                     document.add(new Field("AbstractTextOrginal", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
+
+                } else if (tempNode.getNodeName().equals("LastName")) {
+
+                    tempAuthors += ",";
+                    tempAuthors += tempNode.getTextContent();
+
+                } else if (tempNode.getNodeName().equals("ForeName")) {
+
+                    tempAuthors += ",";
+                    tempAuthors += tempNode.getTextContent();
 
                 }
 
