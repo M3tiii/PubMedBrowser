@@ -48,15 +48,6 @@ public class Indexer {
     public int createIndex() throws IOException {
 
         try {
-
-//            File file = new File(System.getProperty("user.dir") + dataDir + "/medline17n0893.xml");
-
-//            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
-//                    .newDocumentBuilder();
-
-//            org.w3c.dom.Document doc = dBuilder.parse(file);
-
-
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
                     .newDocumentBuilder();
 
@@ -96,9 +87,11 @@ public class Indexer {
             if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
 
                 if (tempNode.getNodeName().equals("PMID")) {
+                    if (tempAuthors != null && tempAuthors.length() > 0) {
+                        tempAuthors = tempAuthors.substring(2);
+                    }
 
-                    tempAuthors = tempAuthors.substring(1);
-                    System.out.println(tempAuthors);
+//                    System.out.println(tempAuthors);
                     document.add(new Field("AuthorList", tempAuthors, Field.Store.YES, Field.Index.ANALYZED ));
                     document.add(new Field("AuthorListOriginal", tempAuthors, Field.Store.YES, Field.Index.NOT_ANALYZED));
 
@@ -125,14 +118,12 @@ public class Indexer {
 
                 } else if (tempNode.getNodeName().equals("LastName")) {
 
-                    tempAuthors += ",";
+                    tempAuthors += ", ";
                     tempAuthors += tempNode.getTextContent();
 
                 } else if (tempNode.getNodeName().equals("ForeName")) {
-
-                    tempAuthors += ",";
-                    tempAuthors += tempNode.getTextContent();
-
+//                    tempAuthors += ",";
+//                    tempAuthors += tempNode.getTextContent();
                 }
 
                 // get node name and value

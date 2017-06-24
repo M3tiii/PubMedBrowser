@@ -35,12 +35,12 @@ public class LuceneTester {
         System.out.println("#Lucene " + numIndexed+ " File indexed, time taken: " +(endTime-startTime)+" ms");
     }
 
-    public ArrayList<SearchResponse> search(String searchQuery, boolean isAdvance) throws IOException, ParseException {
+    public ArrayList<SearchResponse> search(String searchQuery, boolean isAdvance, String author) throws IOException, ParseException {
         System.out.println("#Lucene search " + searchQuery);
         searcher = new Searcher(indexDir);
 
         long startTime = System.currentTimeMillis();
-        TopDocs hits = searcher.search(searchQuery, isAdvance);
+        TopDocs hits = searcher.search(searchQuery, isAdvance, author);
 
         long endTime = System.currentTimeMillis();
 
@@ -50,19 +50,20 @@ public class LuceneTester {
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = searcher.getDocument(scoreDoc);
             System.out.println("#Lucene File: " + doc.get("PMID"));
-            res.add(this.toResponse(doc.get("PMID"), doc.get("ArticleTitleOrginal"), doc.get("AbstractTextOrginal"), scoreDoc.score));
+            res.add(this.toResponse(doc.get("PMID"), doc.get("ArticleTitleOrginal"), doc.get("AbstractTextOrginal"), scoreDoc.score, doc.get("AuthorListOriginal")));
         }
 
         searcher.close();
         return res;
     }
 
-    public SearchResponse toResponse(String PMID, String articleTitle, String abstractText, float score) {
+    public SearchResponse toResponse(String PMID, String articleTitle, String abstractText, float score, String authors) {
        SearchResponse article = new SearchResponse();
        article.setPMID(PMID);
        article.setArticleTitle(articleTitle);
        article.setAbstractText(abstractText);
        article.setScore(score);
+       article.setAuthors(authors);
        return article;
     }
 }

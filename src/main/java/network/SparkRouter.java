@@ -42,7 +42,7 @@ public class SparkRouter {
             System.out.println("#Spark get search");
             SearchRequest searchRequest = jsonTransformer.fromJson(request.body(), SearchRequest.class);
             try {
-                Object res = this.lucene.search(searchRequest.getText(), searchRequest.isAdvance());
+                Object res = this.lucene.search(searchRequest.getText(), searchRequest.isAdvance(), searchRequest.getAuthor());
                 return jsonTransformer.toJson(res);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -53,7 +53,7 @@ public class Searcher {
         return sb.toString();
     }
 
-    public TopDocs search( String searchQuery, boolean isAdvance) throws IOException, ParseException {
+    public TopDocs search( String searchQuery, boolean isAdvance, String author) throws IOException, ParseException {
 //        query = queryParser.parse(searchQuery);
 //        return indexSearcher.search(query, LuceneConstants.MAX_SEARCH);
 
@@ -61,14 +61,27 @@ public class Searcher {
 //        BooleanQuery booleanQuery = new BooleanQuery();
 //        booleanQuery.add(querySimple, BooleanClause.Occur.SHOULD);
 //        return indexSearcher.search(booleanQuery, LuceneConstants.MAX_SEARCH);
+        String special = "";
+        Boolean passed = false;
+        if(!searchQuery.equals("")) {
+            passed = true;
+            searchQuery = removeStopWords(searchQuery);
+            System.out.println("#Lucene query " + searchQuery + " | author: " + author);
 
-        searchQuery = removeStopWords(searchQuery);
-        System.out.println("#Lucene query " + searchQuery);
+            special = "MeshHeading:" + searchQuery;
 
-        String special = "MeshHeading:" + searchQuery;
+            if (isAdvance) {
+                special += " OR AbstractText:" + searchQuery + " OR ArticleTitle:" + searchQuery;
+            }
+        }
 
-        if(isAdvance) {
-            special = "MeshHeading:" + searchQuery + " OR AbstractText:" + searchQuery + " OR ArticleTitle:" + searchQuery;
+        if(!author.equals("")) {
+            System.out.println("#author " + author);
+            if(passed) {
+                special += " OR AuthorList:" + author;
+            } else {
+                special += " AuthorList:" + author;
+            }
         }
 
         return indexSearcher.search(queryParser.parse(special), LuceneConstants.MAX_SEARCH);
