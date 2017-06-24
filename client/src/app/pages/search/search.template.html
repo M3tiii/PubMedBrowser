@@ -1,12 +1,13 @@
-<div class="left-panel col-sm-3">
+<div class="left-panel col-sm-4">
   <div class="searcher shadow">
     <h1>PubMed Browser</h1>
     <div class="input-group">
-      <!-- <textarea class="form-control" rows="5" id="comment"></textarea> -->
-      <input type="text" class="form-control" placeholder="Search for..." ng-model="ctrl.searchText">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="ctrl.search()">Search</button>
-        <button class="btn btn-default" type="button" ng-click="isCollapsed = !isCollapsed">Advance</button>
+      <textarea class="form-control custom-control" rows="3" style="resize:none" placeholder="Search for..." ng-model="ctrl.searchText"></textarea>
+      <span class="input-group-addon btn btn-primary" ng-click="ctrl.search()">
+        <i class="icon-search"></i>
+      </span>
+      <span class="input-group-addon btn btn-primary" ng-click="isCollapsed = !isCollapsed">
+        <i class="icon-cog"></i>
       </span>
     </div>
   </div>
@@ -20,7 +21,7 @@
           <input type="text" class="form-control" placeholder="author name..." ng-model="ctrl.advanceName"></li>
         <li class="list-group-item">
           <div class="checkbox">
-            <label><input type="checkbox" value="" ng-model="ctrl.advance1">Option 1</label>
+            <label><input type="checkbox" value="" ng-model="ctrl.advance1">Expanded search</label>
           </div>
         </li>
         <li class="list-group-item">
@@ -32,7 +33,7 @@
     </div>
   </div>
 
-  <div class="search-result">
+  <!-- <div class="search-result">
     <ul class="list-group shadow">
       <li ng-repeat="result in ctrl.searchResult" class="list-group-item">
         <div class="row">
@@ -40,7 +41,7 @@
             <span class="label label-info">{{result.PMID}}</span>
           </div>
           <div class="progress col-sm-6">
-            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow={{result.score}} aria-valuemin="0" aria-valuemax="100" style="{{'width: ' + result.score*25 + '%'}}">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow={{result.score}} aria-valuemin="0" aria-valuemax="100" style="{{'width: ' + result.score + '%'}}">
               {{result.score}}
             </div>
           </div>
@@ -48,9 +49,9 @@
         <div>{{result.articleTitle}}</div>
       </li>
     </ul>
-  </div>
+  </div> -->
 </div>
 
-<div class="right-panel col-sm-9">
+<div class="right-panel col-sm-8">
   <article-list></article-list>
 </div>

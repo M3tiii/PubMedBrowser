@@ -5,6 +5,7 @@ public class SearchResponse {
     private String PMID;
     private String articleTitle;
     private String abstractText;
+    private String[] authors;
     private float score;
 
     public String getPMID() {
@@ -25,5 +26,9 @@ public class SearchResponse {
 
     public void setAbstractText(String abstractText) {
         this.abstractText = abstractText;
+    }
+
+    public void setAuthors(String[] authors) {
+        this.authors = authors;
     }
 }

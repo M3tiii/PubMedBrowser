@@ -35,12 +35,13 @@ public class LuceneTester {
         System.out.println("#Lucene " + numIndexed+ " File indexed, time taken: " +(endTime-startTime)+" ms");
     }
 
-    public ArrayList<SearchResponse> search(String searchQuery) throws IOException, ParseException {
+    public ArrayList<SearchResponse> search(String searchQuery, boolean isAdvance) throws IOException, ParseException {
         System.out.println("#Lucene search " + searchQuery);
         searcher = new Searcher(indexDir);
 
         long startTime = System.currentTimeMillis();
-        TopDocs hits = searcher.search(searchQuery);
+        TopDocs hits = searcher.search(searchQuery, isAdvance);
+
         long endTime = System.currentTimeMillis();
 
         ArrayList<SearchResponse> res = new ArrayList<SearchResponse>();
