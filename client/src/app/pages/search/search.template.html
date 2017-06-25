@@ -3,8 +3,8 @@
     <div class="searcher shadow">
       <h1>PubMed Browser</h1>
       <div class="input-group">
-        <textarea class="form-control custom-control" rows="3" style="resize:none" placeholder="Search for..." ng-model="ctrl.searchText"></textarea>
-        <span class="input-group-addon btn btn-primary" ng-click="ctrl.search()">
+        <textarea class="form-control custom-control" rows="3" style="resize:none" placeholder="Search for..." ng-model="$ctrl.searchText"></textarea>
+        <span class="input-group-addon btn btn-primary" ng-click="$ctrl.search()">
         <i class="icon-search"></i>
       </span>
         <span class="input-group-addon btn btn-primary" ng-click="isCollapsed = !isCollapsed">
@@ -19,10 +19,10 @@
         <ul class="list-group">
           <li class="list-group-item">
             Search by author
-            <input type="text" class="form-control" placeholder="author name..." ng-model="ctrl.advanceName"></li>
+            <input type="text" class="form-control" placeholder="author name..." ng-model="$ctrl.advanceName"></li>
           <li class="list-group-item">
             <div class="checkbox">
-              <label><input type="checkbox" value="" ng-model="ctrl.advance1">Expanded search</label>
+              <label><input type="checkbox" value="" ng-model="$ctrl.advance1">Expanded search</label>
             </div>
           </li>
         </ul>

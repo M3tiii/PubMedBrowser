@@ -1,22 +1,38 @@
+// import angular from 'angular';
+//
+// import SearchController from './search.controller';
+// import SearchTemplate from './search.template.html';
+//
+// const search = angular.module('PubMedBrowser.pages.search', [])
+//   .controller('SearchController', SearchController)
+//   .config(config)
+//   .name;
+//
+// /** @ngInject */
+// function config($stateProvider) {
+//   $stateProvider
+//     .state('search', {
+//       url: '/?search&article',
+//       template: SearchTemplate,
+//       controller: 'SearchController',
+//       controllerAs: 'ctrl'
+//     });
+// }
+//
+// export default search;
 import angular from 'angular';
 
-import SearchController from './search.controller';
-import SearchTemplate from './search.template.html';
+import template from './search.template.html';
+import controller from './search.controller';
 
-const search = angular.module('PubMedBrowser.pages.search', [])
-  .controller('SearchController', SearchController)
-  .config(config)
-  .name;
+export const searchModule = 'search';
 
 /** @ngInject */
-function config($stateProvider) {
-  $stateProvider
-    .state('search', {
-      url: '/?search&article',
-      template: SearchTemplate,
-      controller: 'SearchController',
-      controllerAs: 'ctrl'
-    });
-}
+const SearchComponent = {
+  template,
+  controller: ['$scope', '$stateParams', '$location', 'articleService', controller]
+};
 
-export default search;
+angular
+  .module(searchModule, [])
+  .component('search', SearchComponent);

@@ -6,7 +6,6 @@ export default function articleService($http) {
   };
 
   this.search = function(data) {
-    console.log(data);
     return $http({
       method: 'POST',
       url: 'http://0.0.0.0:4567/search',

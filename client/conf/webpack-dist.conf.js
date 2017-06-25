@@ -10,8 +10,7 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
-    loaders: [
-      {
+    loaders: [{
         test: /\.json$/,
         loaders: [
           'json-loader'
@@ -43,6 +42,10 @@ module.exports = {
         loaders: [
           'html-loader'
         ]
+      },
+      {
+        test: /\.(png|svg)$/,
+        loader: "file-loader"
       }
     ]
   },
@@ -54,11 +57,19 @@ module.exports = {
       template: conf.path.src('index.html')
     }),
     new webpack.optimize.UglifyJsPlugin({
-      output: {comments: false},
-      compress: {unused: true, dead_code: true, warnings: false} // eslint-disable-line camelcase
+      output: {
+        comments: false
+      },
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
+      } // eslint-disable-line camelcase
     }),
     new ExtractTextPlugin('index-[contenthash].css'),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: () => [autoprefixer]
