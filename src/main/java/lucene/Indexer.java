@@ -92,7 +92,7 @@ public class Indexer {
                     }
 
 //                    System.out.println(tempAuthors);
-                    document.add(new Field("AuthorList", tempAuthors, Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("AuthorList", tempAuthors, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES ));
                     document.add(new Field("AuthorListOriginal", tempAuthors, Field.Store.YES, Field.Index.NOT_ANALYZED));
 
                     writer.addDocument(document);
@@ -104,16 +104,16 @@ public class Indexer {
 
                 } else if (tempNode.getNodeName().equals("ArticleTitle")) {
 
-                    document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("ArticleTitle", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES ));
                     document.add(new Field("ArticleTitleOrginal", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("DescriptorName")) {
                     //if(tempNode.getTextContent().equals("Female")){System.out.println("jest Female: " + tempNode.getTextContent() + ".");}
-                    document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("MeshHeading", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES ));
 
                 } else if (tempNode.getNodeName().equals("AbstractText")) {
 
-                    document.add(new Field("AbstractText", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED ));
+                    document.add(new Field("AbstractText", tempNode.getTextContent(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES ));
                     document.add(new Field("AbstractTextOrginal", tempNode.getTextContent(), Field.Store.YES, Field.Index.NOT_ANALYZED ));
 
                 } else if (tempNode.getNodeName().equals("LastName")) {
